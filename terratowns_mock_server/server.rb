@@ -188,6 +188,7 @@ class TerraTownsMockServer < Sinatra::Base
 
     home = Home.new
     home.town = $home[:town]
+    home.dowmain_name = $home[:domain_name]
     home.name = name
     home.description = description
     home.domain_name = domain_name
@@ -210,7 +211,9 @@ class TerraTownsMockServer < Sinatra::Base
     if params[:uuid] != $home[:uuid]
       error 404, "failed to find home with provided uuid and bearer token"
     end
-
+     
+    # delete from mock database
+    uuid = $home[:uuid]
     $home = {}
     { message: "House deleted successfully" }.to_json
   end
