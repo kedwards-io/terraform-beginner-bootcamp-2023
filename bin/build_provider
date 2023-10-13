@@ -10,8 +10,8 @@ rm -rf ~/.terraform.d/plugins
 rm -rf $PROJECT_ROOT/.terraform
 rm -rf $PROJECT_ROOT/.terraform.lock.hcl
 go build -o $PLUGIN_NAME
-mkrdir -p $PLUGIN_DIR/x86_64/
-mkrdir -p $PLUGIN_DIR/linux_amd64/
+mkdir -p $PLUGIN_DIR/x86_64/
+mkdir -p $PLUGIN_DIR/linux_amd64/
 cp $PLUGIN_NAME $PLUGIN_DIR/x86_64/
 cp $PLUGIN_NAME $#1! /usr/bin/bash
 
