@@ -1,13 +1,5 @@
 terraform {
 
-  #   cloud {
-  #     organization = "4kedwards"
-
-  #     workspaces {
-  #       name = "terra-house-1"
-  #     }
-  #   }
-
   required_providers {
 
     aws = {
