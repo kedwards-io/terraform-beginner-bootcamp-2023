@@ -5,7 +5,16 @@ terraform {
       version = "1.0.0"
     }
   }
+
+  cloud {
+    organization = "4kedwards"
+
+    workspaces {
+      name = "terra-house-1"
+    }
+  }
 }
+
 provider "terratowns" {
   endpoint  = var.terratowns_endpoint
   user_uuid = var.teacherseat_user_uuid
@@ -14,24 +23,40 @@ provider "terratowns" {
 
 
 
-module "terrahouse_aws" {
-  source              = "./modules/terrahouse_aws"
-  user_uuid           = var.teacherseat_user_uuid
-  bucket_name         = var.bucket_name
-  index_html_filepath = var.index_html_filepath
-  error_html_filepath = var.error_html_filepath
-  assets_path         = var.assets_path
-  content_version     = var.content_version
+module "home_arcanum_hosting" {
+  source      = "./modules/terrahome_aws"
+  user_uuid   = var.teacherseat_user_uuid
+  public_path = var.arcanum.public_path
+  # bucket_name     = var.bucket_name
+  content_version = var.arcanum.content_version
 }
 
-resource "terratowns_home" "home" {
-  name        = "How to play Arcanum in 2023"
-  description = <<DESCRIPTION
+resource "terratowns_home" "home_arcanum" {
+  name            = "How to play Arcanum in 2023"
+  description     = <<DESCRIPTION
   Arcanum is a game from 2001 that shipped with a lot of bugs.
   Modders have removed all the original issues making this game fun to play.
   DESCRIPTION
-  domain_name = module.terrahouse_aws.cloudfront_url
-  # domain_name     = "234hlj4.cloudfront.net"
+  domain_name     = module.home_arcanum_hosting.domain_name
   town            = "missingo"
-  content_version = 1
+  content_version = var.arcanum.content_version
+}
+
+module "home_chili_hosting" {
+  source      = "./modules/terrahome_aws"
+  user_uuid   = var.teacherseat_user_uuid
+  public_path = var.chili.public_path
+  # bucket_name = var.bucket_name
+  content_version = var.chili.content_version
+}
+
+resource "terratowns_home" "home_chili" {
+  name            = "How to make chili"
+  description     = <<DESCRIPTION
+  Since the weather is cooling off, it's time to make chili.
+  Here's a super simple recipe.
+  DESCRIPTION
+  domain_name     = module.home_chili_hosting.domain_name
+  town            = "missingo"
+  content_version = var.chili.content_version
 }
