@@ -10,14 +10,21 @@ variable "terratowns_access_token" {
   type = string
 }
 
-variable "arcanum" {
+# variable "arcanum" {
+#   type = object({
+#     public_path     = string
+#     content_version = number
+#   })
+# }
+
+variable "chili" {
   type = object({
     public_path     = string
     content_version = number
   })
 }
 
-variable "chili" {
+  variable "survivor" {
   type = object({
     public_path     = string
     content_version = number
