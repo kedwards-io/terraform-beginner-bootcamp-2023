@@ -23,24 +23,24 @@ provider "terratowns" {
 
 
 
-module "home_arcanum_hosting" {
-  source      = "./modules/terrahome_aws"
-  user_uuid   = var.teacherseat_user_uuid
-  public_path = var.arcanum.public_path
-  # bucket_name     = var.bucket_name
-  content_version = var.arcanum.content_version
-}
+# module "home_arcanum_hosting" {
+#   source      = "./modules/terrahome_aws"
+#   user_uuid   = var.teacherseat_user_uuid
+#   public_path = var.arcanum.public_path
+#   # bucket_name     = var.bucket_name
+#   content_version = var.arcanum.content_version
+# }
 
-resource "terratowns_home" "home_arcanum" {
-  name            = "How to play Arcanum in 2023"
-  description     = <<DESCRIPTION
-  Arcanum is a game from 2001 that shipped with a lot of bugs.
-  Modders have removed all the original issues making this game fun to play.
-  DESCRIPTION
-  domain_name     = module.home_arcanum_hosting.domain_name
-  town            = "missingo"
-  content_version = var.arcanum.content_version
-}
+# resource "terratowns_home" "home_arcanum" {
+#   name            = "How to play Arcanum in 2023"
+#   description     = <<DESCRIPTION
+#   Arcanum is a game from 2001 that shipped with a lot of bugs.
+#   Modders have removed all the original issues making this game fun to play.
+#   DESCRIPTION
+#   domain_name     = module.home_arcanum_hosting.domain_name
+#   town            = "missingo"
+#   content_version = var.arcanum.content_version
+# }
 
 module "home_chili_hosting" {
   source      = "./modules/terrahome_aws"
@@ -57,6 +57,23 @@ resource "terratowns_home" "home_chili" {
   Here's a super simple recipe.
   DESCRIPTION
   domain_name     = module.home_chili_hosting.domain_name
-  town            = "missingo"
+  town            = "cooker-cove"
   content_version = var.chili.content_version
+}
+
+module "home_survivor_hosting" {
+  source      = "./modules/terrahome_aws"
+  user_uuid   = var.teacherseat_user_uuid
+  public_path = var.survivor.public_path
+  content_version = var.survivor.content_version
+}
+
+resource "terratowns_home" "home_survivor" {
+  name            = "Is Survivor the greatest reality show of all time?"
+  description     = <<DESCRIPTION
+  Survivor is an American reality TV series that premiered on May 31, 2000.
+  DESCRIPTION
+  domain_name     = module.home_survivor_hosting.domain_name
+  town            = "video-valley"
+  content_version = var.survivor.content_version
 }
